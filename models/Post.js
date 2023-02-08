@@ -15,6 +15,10 @@ Post.init(
         type: DataTypes.STRING,
         allowNull: false,
     },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     body: {
         type: DataTypes.TEXT
     },
