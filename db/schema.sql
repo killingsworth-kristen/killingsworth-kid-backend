@@ -1,3 +1,3 @@
-DROP DATABASE IF EXISTS baby_boyle_db;
+DROP DATABASE IF EXISTS killingsworth_kid_db;
 
-CREATE DATABASE baby_boyle_db;
+CREATE DATABASE killingsworth_kid_db;

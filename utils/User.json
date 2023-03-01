@@ -1,3 +1,18 @@
-{
-    
-}
+[
+    {
+        "email": "kristenk2017@gmail.com",
+        "familyName": "Killingsworth",
+        "givenName": "Kristen",
+        "googleId": "104302399344306400723",
+        "imageUrl": "https://lh3.googleusercontent.com/a/AGNmyxbwjFVcNXzc0_UoNr4wUmGdgglRCY_7RQmd7rw3=s96-c",
+        "name": "Kristen Killingsworth"
+    },
+    {
+        "email": "test@gmail.com",
+        "familyName": "McTest",
+        "givenName": "Test",
+        "googleId": "123456789123456789123",
+        "imageUrl": null,
+        "name": "Test McTest"
+    }
+]
