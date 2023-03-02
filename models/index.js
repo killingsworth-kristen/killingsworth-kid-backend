@@ -7,9 +7,11 @@ const Comment = require('./Comment');
 User.hasMany(Post, {
     foreignKey: 'UsersId',
     onDelete: 'CASCADE',
+    allowNull: false,
 });
 Post.belongsTo(User, {
     foreignKey: 'UsersId',
+    allowNull: false,
 });
 
 // User to Comment relationship
