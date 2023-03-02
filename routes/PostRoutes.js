@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
-const { Post, User } = require('./../models')
+const { Post, User, Comment } = require('./../models')
 
 // get all posts
 // how to reformat date https://sebhastian.com/sequelize-date-format/
 router.get('/', (req, res) => {
     Post.findAll({
-            include: [ User ]
+            include: [ User, Comment ]
         })
         .then ((post) => {
         res.status(200).json(post)
@@ -19,7 +19,9 @@ router.get('/', (req, res) => {
 
 // get one post by id
 router.get('/:id', (req,res) => {
-    Post.findByPk(req.params.id)
+    Post.findByPk(req.params.id, {
+        include: [ User, Comment ]
+    })
         .then(onePost=>{
             if(!onePost) {
             res.status(404).json({msg: `This post does not exist!`});
@@ -39,6 +41,8 @@ router.post('/', (req,res) => {
         image: req.body.image,
         body: req.body.body,
         UsersId: req.body.UsersId
+    },{
+        include: [ User, Comment ]
     })
         .then(newPost=>{
             res.status(200).json(newPost);
