@@ -1,3 +1,3 @@
 # Killingsworth Kid Blog Backend
 
-API/backend for Baby Boyle Site
+API/backend for Killingsworth Kid Blog Site
