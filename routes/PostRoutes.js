@@ -1,26 +1,26 @@
 const router = require('express').Router();
 
-const { Post, User, Comment } = require('./../models')
+const { Post, User, Comment, Like } = require('./../models')
 
 // get all posts
 // how to reformat date https://sebhastian.com/sequelize-date-format/
 router.get('/', (req, res) => {
     Post.findAll({
-            include: [ User, Comment ]
+            include: [ User, Comment, Like ]
         })
         .then ((post) => {
-        res.status(200).json(post)
+            res.status(200).json(post)
         })
         .catch((err)=> {
-        console.log(err);
-        res.status(500).json({msg: err})
-        })
+            console.log(err);
+            res.status(500).json({msg: err})
+        });
 });
 
 // get one post by id
 router.get('/:id', (req,res) => {
     Post.findByPk(req.params.id, {
-        include: [ User, Comment ]
+        include: [ User, Comment, Like ]
     })
         .then(onePost=>{
             if(!onePost) {
@@ -28,7 +28,8 @@ router.get('/:id', (req,res) => {
             } else {
                 res.status(200).json(onePost);
             }
-        }).catch(err=>{
+        })
+        .catch(err=>{
             console.log(err);
             res.status(400).json(err);
         });
@@ -41,8 +42,6 @@ router.post('/', (req,res) => {
         image: req.body.image,
         body: req.body.body,
         UsersId: req.body.UsersId
-    },{
-        include: [ User, Comment ]
     })
         .then(newPost=>{
             res.status(200).json(newPost);
@@ -50,7 +49,7 @@ router.post('/', (req,res) => {
         .catch(err=>{
             console.log(err);
             res.status(400).json(err);
-        })
+        });
 });
 
 // update post
@@ -75,8 +74,9 @@ router.put('/:id', (req,res) => {
         .catch(err => {
             console.log(err);
             res.status(400).json(err);
-        }) 
-})
+        }) ;
+});
+
 // delete post
 router.delete('/:id', (req,res) => {
     Post.destroy({
@@ -94,7 +94,7 @@ router.delete('/:id', (req,res) => {
         .catch(err=>{
             console.log(err);
             res.status(400).json(err);
-        })
+        });
 });
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const User = require('./User');
 const Post = require('./Post');
 const Comment = require('./Comment');
-// const Like = require('./Like');
+const Like = require('./Like');
 
 // User to Post relationship
 User.hasMany(Post, {
@@ -24,22 +24,22 @@ Comment.belongsTo(User, {
 });
 
 // User to Like relationship
-// User.hasMany(Like,{
-//     foreignKey: 'Users.id',
-//     onDelete: 'CASCADE'
-// });
-// Like.belongsTo(User, {
-//     foreignKey: 'Users.id'
-// });
+User.hasMany(Like,{
+    foreignKey: 'UsersId',
+    onDelete: 'CASCADE'
+});
+Like.belongsTo(User, {
+    foreignKey: 'UsersId'
+});
 
 // Post to Like relationship
-// Post.hasMany(Like,{
-//     foreignKey: 'Posts.id',
-//     onDelete: 'SET NULL'
-// });
-// Like.belongsTo(Post,{
-//     foreignKey: 'Posts.id'
-// });
+Post.hasMany(Like,{
+    foreignKey: 'PostsId',
+    onDelete: 'SET NULL'
+});
+Like.belongsTo(Post,{
+    foreignKey: 'PostsId'
+});
 
 // Post to Comment Relationship
 Post.hasMany(Comment, {
@@ -59,4 +59,4 @@ Comment.belongsTo(Post, {
 //     foreignKey: 'Comments.id'
 // });
 
-module.exports = { User, Post, Comment };
+module.exports = { User, Post, Comment, Like };
