@@ -6,7 +6,7 @@ const { Comment, Post, User } = require('./../models')
 // how to reformat date https://sebhastian.com/sequelize-date-format/
 router.get('/', (req, res) => {
     Comment.findAll({
-        include:[ Post, User ],
+        include: { all: true, nested: true }
     })
         .then ((comment) => {
         res.json(comment)
@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 // find one comment by id
 router.get('/:id', (req,res) => {
     Comment.findByPk(req.params.id, {
-        include: [ Post, User]
+        include: { all: true, nested: true }
     })
         .then(oneComment=>{
             if(!oneComment) {

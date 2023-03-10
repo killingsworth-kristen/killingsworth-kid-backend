@@ -5,7 +5,8 @@
         "givenName": "Kristen",
         "googleId": "104302399344306400723",
         "imageUrl": "https://lh3.googleusercontent.com/a/AGNmyxbwjFVcNXzc0_UoNr4wUmGdgglRCY_7RQmd7rw3=s96-c",
-        "name": "Kristen Killingsworth"
+        "name": "Kristen Killingsworth",
+        "isAdmin": true
     },
     {
         "email": "test@gmail.com",

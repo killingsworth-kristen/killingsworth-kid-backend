@@ -5,7 +5,7 @@ const { Like, User, Post } = require('./../models')
 // get all likes
 router.get('/', (req,res) => {
     Like.findAll({
-        include: [ User, Post]
+        include: { all: true, nested: true }
     })
     .then(allLikes => {
         if (!allLikes) {
@@ -23,7 +23,7 @@ router.get('/', (req,res) => {
 // get one like
 router.get('/:id', (req,res) => {
     Like.findByPk(req.params.id,{
-        include: [ User, Post]
+        include: { all: true, nested: true }
     })
     .then(oneLike => {
         if (!oneLike) {
