@@ -7,9 +7,11 @@ const { Post, User, Comment, Like } = require('./../models')
 // how to reformat date https://sebhastian.com/sequelize-date-format/
 router.get('/', (req, res) => {
     Post.findAll({
-        include: { all: true, nested: true }
+            include: { all: true, nested: true }, 
+            order: [['createdAt', 'DESC']]
         })
         .then ((post) => {
+
             res.status(200).json(post)
         })
         .catch((err)=> {
@@ -38,26 +40,20 @@ router.get('/:id', (req,res) => {
 
 // create new post
 router.post('/', (req,res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    if (token !== process.env.ADMIN_TOKEN) {
-        res.status(401).json("Only an admin can create a new post!")
-        return;
-    } else {
-        Post.create({
-            title: req.body.title,
-            image: req.body.image,
-            body: req.body.body,
-            UsersId: req.body.UsersId
+    Post.create({
+        title: req.body.title,
+        image: req.body.image,
+        body: req.body.body,
+        UsersId: req.body.UsersId
+    })
+        .then(newPost=>{
+            res.status(200).json(newPost);
         })
-            .then(newPost=>{
-                res.status(200).json(newPost);
-            })
-            .catch(err=>{
-                console.log(err);
-                res.status(400).json(err);
-            });
-    }
-    });
+        .catch(err=>{
+            console.log(err);
+            res.status(400).json(err);
+        });
+});
     
 
 // update post

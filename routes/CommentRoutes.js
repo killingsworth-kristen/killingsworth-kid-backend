@@ -6,7 +6,8 @@ const { Comment, Post, User } = require('./../models')
 // how to reformat date https://sebhastian.com/sequelize-date-format/
 router.get('/', (req, res) => {
     Comment.findAll({
-        include: { all: true, nested: true }
+        include: { all: true, nested: true },
+        order: [['createdAt', 'DESC']]
     })
         .then ((comment) => {
         res.json(comment)
