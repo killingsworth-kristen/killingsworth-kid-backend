@@ -3,8 +3,6 @@ const { User } = require('./../models')
 const {OAuth2Client} = require('google-auth-library')
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
-let payload
-
 // post token
 router.post('/token', (req, res) => {
     async function verify (token) {
@@ -12,46 +10,33 @@ router.post('/token', (req, res) => {
          idToken: token,
          audience: process.env.CLIENT_ID
         })
-        payload = ticket.getPayload()
-        console.log("verify function is being called")
+        const payload = ticket.getPayload()
         return payload
        }
         verify(req.body.token)
         .then((payload)=>{
+            let userObj = payload
+            User.findByPk(payload.sub)
+            .then((tokenUser)=>{
+                if (!tokenUser) {
+                    User.create({
+                        email: userObj.email,
+                        familyName: userObj.familyName,
+                        givenName: userObj.givenName,
+                        googleId: userObj.sub,
+                        imageUrl: userObj.imageUrl,
+                        name: userObj.name,
+                    }).then((newUser)=>{
+                        res.status(200).json(newUser)
+                    })
+                }
+            })
             res.status(200).json(payload);
             console.log(payload)
         }).catch((err)=>{
             console.log(err);
             res.status(500).json(err);
         })
-});
-
-// find one user by token
-router.get('/token', (req, res) => {
-    User.findByPk(payload.sub)
-    .then((oneUserbyToken)=>{
-        if(oneUserbyToken) {
-            res.status(200).json()
-        } else {
-            User.create(
-                {email: payload.email,
-                familyName: payload.family_name,
-                givenName: payload.given_name,
-                googleId: payload.sub,
-                imageUrl: payload.picture,
-                name: payload.name,
-                }
-            ).then((newUser)=>{
-                res.status(200).json()
-            }).catch((err)=>{
-                console.log(err);
-                res.status(500).json(err);
-            })
-        }
-    }).catch((err)=>{
-        console.log(err);
-        res.status(500).json(err);
-    });
 });
 
 // find all users
