@@ -58,59 +58,47 @@ router.post('/', (req,res) => {
 
 // update post
 router.put('/:id', (req,res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    if (token !== process.env.ADMIN_TOKEN) {
-        res.status(401).json("Only an admin can update a new post!")
-        return;
-    } else {
-        Post.update({
-            title: req.body.title,
-            image: req.body.image,
-            body: req.body.body,
-            UsersId: req.body.UsersId
-        },{
-            where: ({
-                id: req.params.id
-            })
+    Post.update({
+        title: req.body.title,
+        image: req.body.image,
+        body: req.body.body,
+        UsersId: req.body.UsersId
+    },{
+        where: ({
+            id: req.params.id
         })
-            .then(updatePost => {
-                if (!updatePost[0]) {
-                    res.status(404).json("This post does not exist!");
-                } else {
-                    res.status(200).json(updatePost);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(400).json(err);
-            }) ;
-    }
-    });
+    })
+        .then(updatePost => {
+            if (!updatePost[0]) {
+                res.status(404).json("This post does not exist!");
+            } else {
+                res.status(200).json(updatePost);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        }) ;
+});
 
 // delete post
 router.delete('/:id', (req,res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    if (token !== process.env.ADMIN_TOKEN) {
-        res.status(401).json("Only an admin can update a new post!")
-        return;
-    } else {
-        Post.destroy({
-            where: ({
-                id: req.params.id
-            })
+    Post.destroy({
+        where: ({
+            id: req.params.id
         })
-            .then(delPost => {
-                if (delPost === 0) {
-                    res.status(404).json("This post has already been deleted or does not exist")
-                } else {
-                    res.status(200).json(delPost);
-                }
-            })
-            .catch(err=>{
-                console.log(err);
-                res.status(400).json(err);
-            });
-    }
-    });
+    })
+        .then(delPost => {
+            if (delPost === 0) {
+                res.status(404).json("This post has already been deleted or does not exist")
+            } else {
+                res.status(200).json(delPost);
+            }
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(400).json(err);
+        });
+});
 
 module.exports = router;
