@@ -4,6 +4,8 @@ const cors = require("cors")
 // import sequelize connection
 const sequelize = require(`./config/connection`)
 
+console.log("Loaded FLT")
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
