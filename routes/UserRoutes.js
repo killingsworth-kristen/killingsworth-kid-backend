@@ -29,9 +29,10 @@ router.post('/token', (req, res) => {
                     }).then((newUser)=>{
                         res.status(200).json(newUser)
                     })
+                } else {
+                    res.status(200).json(payload);
                 }
             })
-            res.status(200).json(payload);
             console.log(payload)
         }).catch((err)=>{
             console.log(err);
