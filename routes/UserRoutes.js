@@ -94,7 +94,8 @@ router.put('/:id', (req,res) => {
         givenName: req.body.givenName,
         googleId: req.body.googleId,
         imageUrl: req.body.imageUrl,
-        name: req.body.name
+        name: req.body.name,
+        isAdmin: req.body.isAdmin
     },{
         where: ({
             googleId: req.params.id
